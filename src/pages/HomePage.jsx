@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import LoadingSpinner from "../components/LoadingSpinner";
+import ProductCard from "../components/ProductCard";
 
 function HomePage() {
   const [products, setProducts] = useState([]);
@@ -38,20 +39,19 @@ function HomePage() {
 
   return (
     <div className="p-4">
-      <h1 className="mb-6 text-center text-3xl font-bold">Our Products</h1>
-      <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <h1 className="mb-6 text-center text-3xl font-bold text-gray-800">
+        Our Products
+      </h1>
+      <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {products.map((product) => (
-          <li key={product.id} className="rounded bg-white p-4 shadow-sm">
-            <h2 className="text-xl font-semibold">{product.title}</h2>
-            <p>${product.price.toFixed(2)}</p>
-            <img
-              src={product.thumbnail}
-              alt={product.title}
-              className="mt-2 h-24 w-24 object-cover"
-            />
-          </li>
+          <ProductCard key={product.id} product={product} />
         ))}
-      </ul>
+      </div>
+      {products.length === 0 && (
+        <div className="mt-12 text-center text-xl text-gray-600">
+          No products found.
+        </div>
+      )}
     </div>
   );
 }

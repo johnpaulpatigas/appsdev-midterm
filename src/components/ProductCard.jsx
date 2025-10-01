@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import StarRating from "./StarRating";
 
-function ProductCard({ product }) {
+function ProductCard({ product, addToCart }) {
   const { id, title, thumbnail, price, discountPercentage, rating, stock } =
     product;
+
   const discountedPrice = (price - (price * discountPercentage) / 100).toFixed(
     2,
   );
@@ -63,8 +64,11 @@ function ProductCard({ product }) {
             Out of Stock
           </button>
         ) : (
-          <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">
-            Add to Cart (Coming Soon)
+          <button
+            onClick={() => addToCart(product)}
+            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors text-sm font-medium"
+          >
+            Add to Cart
           </button>
         )}
       </div>

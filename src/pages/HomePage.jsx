@@ -6,7 +6,7 @@ import ProductCard from "../components/ProductCard";
 
 const PRODUCTS_PER_PAGE = 12;
 
-function HomePage() {
+function HomePage({ addToCart }) {
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -146,7 +146,11 @@ function HomePage() {
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
             {currentProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard
+                key={product.id}
+                product={product}
+                addToCart={addToCart}
+              />
             ))}
           </div>
           <Pagination

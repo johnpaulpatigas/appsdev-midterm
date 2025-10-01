@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
 import StarRating from "../components/StarRating";
 
-function ProductDetailsPage() {
+function ProductDetailsPage({ addToCart, cart }) {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [mainImage, setMainImage] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const [notification, setNotification] = useState("");
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -22,6 +24,7 @@ function ProductDetailsPage() {
         const data = await response.json();
         setProduct(data);
         setMainImage(data.thumbnail);
+        setQuantity(1);
       } catch (e) {
         console.error("Failed to fetch product details:", e);
         setError("Failed to load product details. Please try again later.");
@@ -32,6 +35,37 @@ function ProductDetailsPage() {
 
     fetchProductDetails();
   }, [id]);
+
+  useEffect(() => {
+    if (notification) {
+      const timer = setTimeout(() => setNotification(""), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [notification]);
+
+  const handleAddToCart = () => {
+    if (product) {
+      addToCart(product, quantity);
+      setNotification(`Added ${quantity} x ${product.title} to cart!`);
+    }
+  };
+
+  const handleQuantityChange = (e) => {
+    let value = parseInt(e.target.value, 10);
+    if (isNaN(value) || value < 1) {
+      value = 1;
+    }
+    if (value > product.stock) {
+      value = product.stock;
+    }
+    setQuantity(value);
+  };
+
+  const itemInCart = cart.find((item) => item.product.id === product?.id);
+  const maxPurchaseableQuantity = product
+    ? product.stock - (itemInCart?.quantity || 0)
+    : 0;
+  const isOutOfStock = product?.stock === 0;
 
   if (loading) {
     return <LoadingSpinner />;
@@ -54,10 +88,9 @@ function ProductDetailsPage() {
     (product.price * product.discountPercentage) / 100
   ).toFixed(2);
   const hasDiscount = product.discountPercentage > 0;
-  const isOutOfStock = product.stock === 0;
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-xl md:flex md:space-x-8 mt-8">
+    <div className="bg-white p-6 rounded-lg shadow-xl md:flex md:space-x-8">
       <div className="md:w-1/2">
         <img
           src={mainImage}
@@ -84,13 +117,13 @@ function ProductDetailsPage() {
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
           {product.title}
         </h1>
-        <Link
-          to={`/?category=${product.category}`}
-          className="text-blue-600 text-sm hover:underline"
-        >
+        <p className="text-gray-600 text-sm mb-2">
           Category:{" "}
-          {product.category.charAt(0).toUpperCase() + product.category.slice(1)}
-        </Link>
+          <span className="font-medium">
+            {product.category.charAt(0).toUpperCase() +
+              product.category.slice(1)}
+          </span>
+        </p>
         <p className="text-gray-700 text-lg mt-4">{product.description}</p>
 
         <div className="flex items-center mt-4">
@@ -151,16 +184,48 @@ function ProductDetailsPage() {
           </p>
         </div>
 
-        <div className="mt-6">
-          {/* Dummy Add to Cart Button for now */}
+        <div className="flex items-center space-x-4 mt-6">
+          <label htmlFor="quantity" className="font-medium text-gray-700">
+            Quantity:
+          </label>
+          <input
+            type="number"
+            id="quantity"
+            min="1"
+            max={product.stock}
+            value={quantity}
+            onChange={handleQuantityChange}
+            disabled={isOutOfStock || maxPurchaseableQuantity === 0}
+            className="w-20 p-2 border border-gray-300 rounded-md text-center focus:ring-blue-500 focus:border-blue-500"
+          />
           <button
-            disabled={isOutOfStock}
-            className={`w-full py-3 px-6 rounded-md text-white font-semibold transition-colors
-                ${isOutOfStock ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}
+            onClick={handleAddToCart}
+            disabled={
+              isOutOfStock || quantity === 0 || maxPurchaseableQuantity === 0
+            }
+            className={`flex-grow py-3 px-6 rounded-md text-white font-semibold transition-colors
+              ${
+                isOutOfStock || quantity === 0 || maxPurchaseableQuantity === 0
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 hover:bg-blue-700"
+              }`}
           >
-            {isOutOfStock ? "Out of Stock" : "Add to Cart (Coming Soon)"}
+            {isOutOfStock ? "Out of Stock" : "Add to Cart"}
           </button>
         </div>
+
+        {notification && (
+          <div className="mt-4 p-3 bg-green-100 text-green-800 rounded-md text-center animate-fade-in-down">
+            {notification}
+          </div>
+        )}
+
+        {maxPurchaseableQuantity === 0 && !isOutOfStock && itemInCart && (
+          <div className="mt-4 p-3 bg-yellow-100 text-yellow-800 rounded-md text-center text-sm">
+            You have {itemInCart.quantity} of this item in your cart (Max stock
+            reached).
+          </div>
+        )}
 
         {product.reviews && product.reviews.length > 0 && (
           <div className="mt-8">

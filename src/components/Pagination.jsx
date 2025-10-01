@@ -20,13 +20,13 @@ function Pagination({ productsPerPage, totalProducts, currentPage, paginate }) {
   }
 
   return (
-    <nav className="flex justify-center mt-8">
+    <nav className="mt-8 flex justify-center">
       <ul className="flex items-center space-x-2">
         <li>
           <button
             onClick={() => paginate(currentPage - 1)}
             disabled={currentPage === 1}
-            className="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="rounded-md bg-gray-200 px-3 py-1 text-gray-700 transition-colors hover:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50"
           >
             Previous
           </button>
@@ -37,7 +37,7 @@ function Pagination({ productsPerPage, totalProducts, currentPage, paginate }) {
             <li>
               <button
                 onClick={() => paginate(1)}
-                className="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+                className="rounded-md bg-gray-200 px-3 py-1 text-gray-700 transition-colors hover:bg-gray-300"
               >
                 1
               </button>
@@ -50,7 +50,7 @@ function Pagination({ productsPerPage, totalProducts, currentPage, paginate }) {
           <li key={number}>
             <button
               onClick={() => paginate(number)}
-              className={`px-3 py-1 rounded-md transition-colors ${
+              className={`rounded-md px-3 py-1 transition-colors ${
                 currentPage === number
                   ? "bg-blue-600 text-white"
                   : "bg-gray-200 text-gray-700 hover:bg-gray-300"
@@ -69,7 +69,7 @@ function Pagination({ productsPerPage, totalProducts, currentPage, paginate }) {
             <li>
               <button
                 onClick={() => paginate(totalPages)}
-                className="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+                className="rounded-md bg-gray-200 px-3 py-1 text-gray-700 transition-colors hover:bg-gray-300"
               >
                 {totalPages}
               </button>
@@ -81,7 +81,7 @@ function Pagination({ productsPerPage, totalProducts, currentPage, paginate }) {
           <button
             onClick={() => paginate(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="rounded-md bg-gray-200 px-3 py-1 text-gray-700 transition-colors hover:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50"
           >
             Next
           </button>

@@ -72,12 +72,12 @@ function ProductDetailsPage({ addToCart, cart }) {
   }
 
   if (error) {
-    return <div className="text-center text-red-600 text-lg mt-8">{error}</div>;
+    return <div className="mt-8 text-center text-lg text-red-600">{error}</div>;
   }
 
   if (!product) {
     return (
-      <div className="text-center text-gray-600 text-lg mt-8">
+      <div className="mt-8 text-center text-lg text-gray-600">
         Product not found.
       </div>
     );
@@ -90,22 +90,21 @@ function ProductDetailsPage({ addToCart, cart }) {
   const hasDiscount = product.discountPercentage > 0;
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-xl md:flex md:space-x-8">
+    <div className="rounded-lg bg-white p-6 shadow-xl md:flex md:space-x-8">
       <div className="md:w-1/2">
         <img
           src={mainImage}
           alt={product.title}
-          className="w-full h-auto object-cover rounded-lg mb-4 shadow-md max-h-[400px]"
+          className="mb-4 h-auto max-h-[400px] w-full rounded-lg object-cover shadow-md"
         />
         {product.images && product.images.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-4">
+          <div className="mt-4 flex flex-wrap gap-2">
             {product.images.map((img, index) => (
               <img
                 key={index}
                 src={img}
                 alt={`${product.title} - ${index + 1}`}
-                className={`w-20 h-20 object-cover rounded-md border-2 cursor-pointer transition-colors
-                            ${img === mainImage ? "border-blue-500" : "border-gray-200 hover:border-blue-300"}`}
+                className={`h-20 w-20 cursor-pointer rounded-md border-2 object-cover transition-colors ${img === mainImage ? "border-blue-500" : "border-gray-200 hover:border-blue-300"}`}
                 onClick={() => setMainImage(img)}
               />
             ))}
@@ -113,34 +112,34 @@ function ProductDetailsPage({ addToCart, cart }) {
         )}
       </div>
 
-      <div className="md:w-1/2 mt-6 md:mt-0">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+      <div className="mt-6 md:mt-0 md:w-1/2">
+        <h1 className="mb-2 text-3xl font-bold text-gray-900">
           {product.title}
         </h1>
-        <p className="text-gray-600 text-sm mb-2">
+        <p className="mb-2 text-sm text-gray-600">
           Category:{" "}
           <span className="font-medium">
             {product.category.charAt(0).toUpperCase() +
               product.category.slice(1)}
           </span>
         </p>
-        <p className="text-gray-700 text-lg mt-4">{product.description}</p>
+        <p className="mt-4 text-lg text-gray-700">{product.description}</p>
 
-        <div className="flex items-center mt-4">
+        <div className="mt-4 flex items-center">
           {hasDiscount ? (
             <div className="flex items-baseline space-x-2">
-              <span className="text-gray-500 line-through text-xl">
+              <span className="text-xl text-gray-500 line-through">
                 ${product.price.toFixed(2)}
               </span>
-              <span className="text-red-600 font-bold text-3xl">
+              <span className="text-3xl font-bold text-red-600">
                 ${discountedPrice}
               </span>
-              <span className="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded-full">
+              <span className="rounded-full bg-green-100 px-2.5 py-0.5 text-sm font-medium text-green-800">
                 -{product.discountPercentage.toFixed(0)}%
               </span>
             </div>
           ) : (
-            <span className="text-gray-900 font-bold text-3xl">
+            <span className="text-3xl font-bold text-gray-900">
               ${product.price.toFixed(2)}
             </span>
           )}
@@ -159,8 +158,8 @@ function ProductDetailsPage({ addToCart, cart }) {
             <span
               className={
                 isOutOfStock
-                  ? "text-red-500 font-semibold ml-1"
-                  : "text-green-600 font-semibold ml-1"
+                  ? "ml-1 font-semibold text-red-500"
+                  : "ml-1 font-semibold text-green-600"
               }
             >
               {product.availabilityStatus} ({product.stock} in stock)
@@ -184,7 +183,7 @@ function ProductDetailsPage({ addToCart, cart }) {
           </p>
         </div>
 
-        <div className="flex items-center space-x-4 mt-6">
+        <div className="mt-6 flex items-center space-x-4">
           <label htmlFor="quantity" className="font-medium text-gray-700">
             Quantity:
           </label>
@@ -196,32 +195,31 @@ function ProductDetailsPage({ addToCart, cart }) {
             value={quantity}
             onChange={handleQuantityChange}
             disabled={isOutOfStock || maxPurchaseableQuantity === 0}
-            className="w-20 p-2 border border-gray-300 rounded-md text-center focus:ring-blue-500 focus:border-blue-500"
+            className="w-20 rounded-md border border-gray-300 p-2 text-center focus:border-blue-500 focus:ring-blue-500"
           />
           <button
             onClick={handleAddToCart}
             disabled={
               isOutOfStock || quantity === 0 || maxPurchaseableQuantity === 0
             }
-            className={`flex-grow py-3 px-6 rounded-md text-white font-semibold transition-colors
-              ${
-                isOutOfStock || quantity === 0 || maxPurchaseableQuantity === 0
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
-              }`}
+            className={`flex-grow rounded-md px-6 py-3 font-semibold text-white transition-colors ${
+              isOutOfStock || quantity === 0 || maxPurchaseableQuantity === 0
+                ? "cursor-not-allowed bg-gray-400"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
           >
             {isOutOfStock ? "Out of Stock" : "Add to Cart"}
           </button>
         </div>
 
         {notification && (
-          <div className="mt-4 p-3 bg-green-100 text-green-800 rounded-md text-center animate-fade-in-down">
+          <div className="animate-fade-in-down mt-4 rounded-md bg-green-100 p-3 text-center text-green-800">
             {notification}
           </div>
         )}
 
         {maxPurchaseableQuantity === 0 && !isOutOfStock && itemInCart && (
-          <div className="mt-4 p-3 bg-yellow-100 text-yellow-800 rounded-md text-center text-sm">
+          <div className="mt-4 rounded-md bg-yellow-100 p-3 text-center text-sm text-yellow-800">
             You have {itemInCart.quantity} of this item in your cart (Max stock
             reached).
           </div>
@@ -229,18 +227,18 @@ function ProductDetailsPage({ addToCart, cart }) {
 
         {product.reviews && product.reviews.length > 0 && (
           <div className="mt-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            <h2 className="mb-4 text-2xl font-bold text-gray-900">
               Customer Reviews
             </h2>
             <div className="space-y-4">
               {product.reviews.map((review, index) => (
                 <div
                   key={index}
-                  className="bg-gray-50 p-4 rounded-lg border border-gray-200"
+                  className="rounded-lg border border-gray-200 bg-gray-50 p-4"
                 >
                   <StarRating rating={review.rating} />
-                  <p className="text-gray-800 mt-2">{review.comment}</p>
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="mt-2 text-gray-800">{review.comment}</p>
+                  <p className="mt-1 text-sm text-gray-500">
                     By {review.reviewerName} on{" "}
                     {new Date(review.date).toLocaleDateString()}
                   </p>

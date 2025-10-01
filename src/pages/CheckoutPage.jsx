@@ -11,11 +11,11 @@ function CheckoutPage({ clearCart }) {
   }, [clearCart]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-160px)] p-4">
-      <div className="bg-white p-8 rounded-lg shadow-xl text-center max-w-md w-full">
+    <div className="flex min-h-[calc(100vh-160px)] flex-col items-center justify-center p-4">
+      <div className="w-full max-w-md rounded-3xl bg-white p-8 text-center shadow-xl">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-16 w-16 text-green-500 mx-auto mb-6"
+          className="mx-auto mb-6 h-16 w-16 text-green-500"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -27,18 +27,18 @@ function CheckoutPage({ clearCart }) {
             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">
+        <h1 className="mb-4 text-3xl font-bold text-gray-900">
           Order Placed Successfully!
         </h1>
-        <p className="text-gray-700 text-lg mb-6">
+        <p className="mb-6 text-lg text-gray-700">
           Thank you for your purchase.
         </p>
-        <p className="text-gray-600 mb-8">
+        <p className="mb-8 text-gray-600">
           Your order details have been sent to your email.
         </p>
         <Link
           to="/appsdev-midterm/"
-          className="bg-blue-600 text-white py-3 px-6 rounded-md text-lg font-semibold hover:bg-blue-700 transition-colors"
+          className="rounded-xl bg-blue-600 px-6 py-3 text-lg font-semibold text-white transition hover:bg-blue-700"
         >
           Continue Shopping
         </Link>

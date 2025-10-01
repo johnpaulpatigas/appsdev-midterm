@@ -123,7 +123,7 @@ function HomePage({ addToCart }) {
   }
 
   if (error) {
-    return <div className="text-center text-red-600 text-lg mt-8">{error}</div>;
+    return <div className="mt-8 text-center text-lg text-red-600">{error}</div>;
   }
 
   return (
@@ -139,12 +139,12 @@ function HomePage({ addToCart }) {
       />
 
       {filteredAndSortedProducts.length === 0 ? (
-        <div className="text-center text-gray-600 text-xl mt-12">
+        <div className="mt-12 text-center text-xl text-gray-600">
           No products found matching your criteria.
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
+          <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {currentProducts.map((product) => (
               <ProductCard
                 key={product.id}

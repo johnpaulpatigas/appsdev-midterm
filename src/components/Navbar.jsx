@@ -2,24 +2,24 @@ import { Link } from "react-router-dom";
 
 function Navbar({ totalCartItems }) {
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+    <nav className="sticky top-0 z-50 bg-white p-2 shadow-md">
+      <div className="container mx-auto flex items-center justify-between px-4 py-3">
         <Link
           to="/appsdev-midterm/"
-          className="text-2xl font-bold text-gray-800 hover:text-blue-600 transition-colors"
+          className="text-2xl font-bold text-gray-800 transition-colors hover:text-blue-600"
         >
           Alibuy
         </Link>
         <div className="flex items-center space-x-4">
           <Link
             to="/appsdev-midterm/"
-            className="text-gray-600 hover:text-blue-600 transition-colors"
+            className="text-gray-600 transition-colors hover:text-blue-600"
           >
             Products
           </Link>
           <Link
             to="/appsdev-midterm/cart"
-            className="relative text-gray-600 hover:text-blue-600 transition-colors"
+            className="relative text-gray-600 transition-colors hover:text-blue-600"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +36,7 @@ function Navbar({ totalCartItems }) {
               />
             </svg>
             {totalCartItems > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+              <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
                 {totalCartItems}
               </span>
             )}

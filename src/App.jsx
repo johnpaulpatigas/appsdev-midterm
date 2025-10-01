@@ -74,9 +74,9 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen flex flex-col bg-gray-50">
+      <div className="flex min-h-screen flex-col bg-gray-100">
         <Navbar totalCartItems={totalCartItems} />
-        <main className="flex-grow container mx-auto p-4 sm:px-6 lg:px-8">
+        <main className="container mx-auto flex-grow p-4 sm:px-6 lg:px-8">
           <Routes>
             <Route
               path="/appsdev-midterm/"

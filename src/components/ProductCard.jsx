@@ -12,43 +12,43 @@ function ProductCard({ product, addToCart }) {
   const isOutOfStock = stock === 0;
 
   return (
-    <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col h-full">
+    <div className="flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-md transition-shadow duration-300 hover:shadow-xl">
       <Link
         to={`/appsdev-midterm/product/${id}`}
-        className="block h-48 sm:h-56 overflow-hidden"
+        className="block h-48 overflow-hidden sm:h-56"
       >
         <img
           src={thumbnail}
           alt={title}
-          className="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105"
+          className="h-full w-full object-cover object-center transition-transform duration-300 hover:scale-105"
         />
       </Link>
-      <div className="p-4 flex flex-col flex-grow">
-        <h3 className="text-lg font-semibold text-gray-900 mb-2 flex-grow">
+      <div className="flex flex-grow flex-col p-4">
+        <h3 className="mb-2 flex-grow text-lg font-semibold text-gray-900">
           <Link
             to={`/appsdev-midterm/product/${id}`}
-            className="hover:text-blue-600 transition-colors"
+            className="transition-colors hover:text-blue-600"
           >
             {title}
           </Link>
         </h3>
-        <div className="flex items-center justify-between mb-2">
+        <div className="mb-2 flex items-center justify-between">
           {hasDiscount ? (
             <div className="flex flex-col">
-              <span className="text-gray-500 line-through text-sm">
+              <span className="text-sm text-gray-500 line-through">
                 ${price.toFixed(2)}
               </span>
-              <span className="text-red-600 font-bold text-lg">
+              <span className="text-lg font-bold text-red-600">
                 ${discountedPrice}
               </span>
             </div>
           ) : (
-            <span className="text-gray-900 font-bold text-lg">
+            <span className="text-lg font-bold text-gray-900">
               ${price.toFixed(2)}
             </span>
           )}
           {hasDiscount && (
-            <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+            <span className="rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
               -{discountPercentage.toFixed(0)}%
             </span>
           )}
@@ -58,7 +58,7 @@ function ProductCard({ product, addToCart }) {
         </div>
         {isOutOfStock ? (
           <button
-            className="w-full bg-gray-400 text-white py-2 px-4 rounded-md text-sm font-medium cursor-not-allowed"
+            className="w-full cursor-not-allowed rounded-md bg-gray-400 px-4 py-2 text-sm font-medium text-white"
             disabled
           >
             Out of Stock
@@ -66,7 +66,7 @@ function ProductCard({ product, addToCart }) {
         ) : (
           <button
             onClick={() => addToCart(product)}
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors text-sm font-medium"
+            className="w-full rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
           >
             Add to Cart
           </button>
